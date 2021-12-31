@@ -16,7 +16,7 @@ class Qualitas extends Scraper implements IScraper
 	
 	public function __construct()
 	{
-		$this->useProxy 	= !true;
+		$this->useProxy 	= true;
 		$this->cookiesFile 	= storage_path('logs') . '/qualitas-cookies.txt';
 		$this->dataFile 	= storage_path('logs') . '/qualitas-data.json';
 		$this->saveCookies = true;
@@ -147,7 +147,7 @@ class Qualitas extends Scraper implements IScraper
 	}
 	public function getEdosCuenta()
 	{
-		$cacheFile = storage_path('app') . '/qualitas-edoscuenta.json';
+		$cacheFile = storage_path('app') . '/qualitas-edoscuenta-'.$this->login.'.json';
 		if( is_file($cacheFile) )
 		{
 			$mtime 	= filemtime($cacheFile);

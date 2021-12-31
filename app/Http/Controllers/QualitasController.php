@@ -31,7 +31,7 @@ class QualitasController extends Controller
 		
 		return $obj;
 	}
-	protected function downloadFile($clave, $fecha, $key, $password)
+	protected function downloadFile($key, $password, $clave, $fecha)
 	{
 		$qualitas = $this->getInstance($key, $password);
 		$obj = (object)[
@@ -43,8 +43,8 @@ class QualitasController extends Controller
 	}
 	public function download(Request $req)
 	{
-		list($clave, $fecha, $key, $password) = explode(',', $req->get('data'));
-		$filename = $this->downloadFile($clave, $fecha, $key, $password);
+		list($key, $password, $clave, $fecha) = explode(',', $req->get('data'));
+		$filename = $this->downloadFile($key, $password, $clave, $fecha);
 		header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
 		header("Content-Disposition: attachment; filename=". basename($filename));  //File name extension was wrong
 		header("Expires: 0");
@@ -54,8 +54,8 @@ class QualitasController extends Controller
 	}
 	public function upload(Request $req)
 	{
-		list($clave, $fecha, $key, $password) = explode(',', $req->get('data'));
-		$filename = $this->downloadFile($clave, $fecha, $key, $password);
+		list($key, $password, $clave, $fecha) = explode(',', $req->get('data'));
+		$filename = $this->downloadFile($key, $password, $clave, $fecha);
 		$qualitas = $this->getInstance();
 		$qualitas->uploadToFtp($filename, $key);
 		return redirect(route('qualitas'));

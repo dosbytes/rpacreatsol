@@ -21,8 +21,9 @@ class ApiQualitasController extends QualitasController
 			unset($data->credentials);
 			throw new Exception('Credenciales incompletas');
 		}
-		
-		$q = $this->getInstance($data);
+
+        list($key, $password) = explode(',', $data);
+		$q = $this->getInstance($key, $password);
 		$q->setCrendentials($login, $account, $pwd);
 		unset($data->credentials);
 	}
@@ -31,7 +32,7 @@ class ApiQualitasController extends QualitasController
 		try 
 		{
 			$data = (object)$request->json()->all();
-			list($clave, $key, $password) = explode(',', $request->get('data'));
+			list($key, $password) = explode(',', $request->get('data'));
 			$this->checkCredentials($data);
 			
 			$qualitas 	= $this->getInstance($key, $password);
